@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth-module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
+import { B2BDashboardController } from './modules/b2b/dashboard-controller';
+import { FavoritesController } from './modules/b2c/favorites-controller';
+import { FormsController } from './modules/common/forms-controller';
 
 @Module({
   imports: [
@@ -31,8 +34,16 @@ import { UsersService } from './users/users.service';
     UsersModule
     // Replace with your MongoDB URI
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [AppController,
+    UsersController,
+    B2BDashboardController,
+    FavoritesController,
+    FormsController,
+  ],
+  providers: [
+    AppService,
+    UsersService,
+  ],
 })
 
 export class AppModule { }

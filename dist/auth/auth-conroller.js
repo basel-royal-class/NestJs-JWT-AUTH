@@ -21,28 +21,48 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async register(createUserDto) {
-        return this.authService.register(createUserDto);
+    registerB2C(createUserDto) {
+        return this.authService.register({ ...createUserDto, userType: 'b2c' });
     }
-    async login(loginDto) {
-        return this.authService.login(loginDto);
+    registerB2B(createUserDto) {
+        return this.authService.register({ ...createUserDto, userType: 'b2b' });
+    }
+    loginB2C(loginDto) {
+        return this.authService.login({ ...loginDto, userType: 'b2c' });
+    }
+    loginB2B(loginDto) {
+        return this.authService.login({ ...loginDto, userType: 'b2b' });
     }
 };
 exports.AuthController = AuthController;
 __decorate([
-    (0, common_1.Post)('register'),
+    (0, common_1.Post)('register/b2c'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "register", null);
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "registerB2C", null);
 __decorate([
-    (0, common_1.Post)('login'),
+    (0, common_1.Post)('register/b2b'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "registerB2B", null);
+__decorate([
+    (0, common_1.Post)('login/b2c'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.LoginDto]),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "login", null);
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "loginB2C", null);
+__decorate([
+    (0, common_1.Post)('login/b2b'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.LoginDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "loginB2B", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

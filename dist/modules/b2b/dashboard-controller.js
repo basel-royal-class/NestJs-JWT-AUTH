@@ -9,31 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtAuthGuard = void 0;
+exports.B2BDashboardController = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
-let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
-    userType;
-    constructor(userType) {
-        super();
-        this.userType = userType;
-    }
-    canActivate(context) {
-        return super.canActivate(context);
-    }
-    handleRequest(err, user, info) {
-        if (err || !user) {
-            throw new common_1.UnauthorizedException();
-        }
-        if (user.userType !== this.userType) {
-            throw new common_1.UnauthorizedException(`Access denied for ${user.userType} users`);
-        }
-        return user;
+const auth_guard_1 = require("../../auth/auth-guard");
+let B2BDashboardController = class B2BDashboardController {
+    getDashboard() {
+        return { message: 'B2B Dashboard' };
     }
 };
-exports.JwtAuthGuard = JwtAuthGuard;
-exports.JwtAuthGuard = JwtAuthGuard = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [String])
-], JwtAuthGuard);
-//# sourceMappingURL=auth-guard.js.map
+exports.B2BDashboardController = B2BDashboardController;
+__decorate([
+    (0, common_1.Get)('dashboard'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], B2BDashboardController.prototype, "getDashboard", null);
+exports.B2BDashboardController = B2BDashboardController = __decorate([
+    (0, common_1.Controller)('b2b'),
+    (0, common_1.UseGuards)(new auth_guard_1.JwtAuthGuard('b2b'))
+], B2BDashboardController);
+//# sourceMappingURL=dashboard-controller.js.map

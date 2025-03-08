@@ -9,31 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtAuthGuard = void 0;
+exports.FormsController = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
-let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
-    userType;
-    constructor(userType) {
-        super();
-        this.userType = userType;
-    }
-    canActivate(context) {
-        return super.canActivate(context);
-    }
-    handleRequest(err, user, info) {
-        if (err || !user) {
-            throw new common_1.UnauthorizedException();
-        }
-        if (user.userType !== this.userType) {
-            throw new common_1.UnauthorizedException(`Access denied for ${user.userType} users`);
-        }
-        return user;
+let FormsController = class FormsController {
+    getMotorsForm() {
+        return { message: 'Motors Forms Response' };
     }
 };
-exports.JwtAuthGuard = JwtAuthGuard;
-exports.JwtAuthGuard = JwtAuthGuard = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [String])
-], JwtAuthGuard);
-//# sourceMappingURL=auth-guard.js.map
+exports.FormsController = FormsController;
+__decorate([
+    (0, common_1.Get)('motors'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], FormsController.prototype, "getMotorsForm", null);
+exports.FormsController = FormsController = __decorate([
+    (0, common_1.Controller)('forms')
+], FormsController);
+//# sourceMappingURL=forms-controller.js.map

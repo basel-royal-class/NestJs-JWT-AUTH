@@ -16,6 +16,7 @@ let User = class User extends mongoose_2.Document {
     username;
     email;
     password;
+    userType;
 };
 exports.User = User;
 __decorate([
@@ -30,6 +31,10 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, enum: ['b2c', 'b2b'] }),
+    __metadata("design:type", String)
+], User.prototype, "userType", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)()
 ], User);

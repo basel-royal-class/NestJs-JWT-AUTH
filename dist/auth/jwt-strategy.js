@@ -14,18 +14,36 @@ const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const passport_jwt_1 = require("passport-jwt");
 const config_1 = require("@nestjs/config");
-let JwtAuthStrategy = class JwtAuthStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
+let JwtAuthStrategy = class JwtAuthStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
     configService;
     constructor(configService) {
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get('JWT_SECRET'),
+            secretOrKeyProvider: (request, rawJwtToken, done) => {
+                try {
+                    const decoded = JSON.parse(Buffer.from(rawJwtToken.split('.')[1], 'base64').toString());
+                    const secret = decoded.userType === 'b2b'
+                        ? configService.get('B2B_JWT_SECRET')
+                        : configService.get('B2C_JWT_SECRET');
+                    done(null, secret);
+                }
+                catch (error) {
+                    done(new common_1.UnauthorizedException('Invalid token'), null);
+                }
+            },
         });
         this.configService = configService;
     }
     async validate(payload) {
-        return { userId: payload.sub, email: payload.email };
+        if (!payload.userType) {
+            throw new common_1.UnauthorizedException('Invalid token: missing user type');
+        }
+        return {
+            userId: payload.sub,
+            email: payload.email,
+            userType: payload.userType
+        };
     }
 };
 exports.JwtAuthStrategy = JwtAuthStrategy;

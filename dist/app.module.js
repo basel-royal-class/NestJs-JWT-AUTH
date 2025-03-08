@@ -17,6 +17,9 @@ const jwt_1 = require("@nestjs/jwt");
 const auth_module_1 = require("./auth/auth-module");
 const users_controller_1 = require("./users/users.controller");
 const users_service_1 = require("./users/users.service");
+const dashboard_controller_1 = require("./modules/b2b/dashboard-controller");
+const favorites_controller_1 = require("./modules/b2c/favorites-controller");
+const forms_controller_1 = require("./modules/common/forms-controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -40,8 +43,16 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             users_module_1.UsersModule
         ],
-        controllers: [app_controller_1.AppController, users_controller_1.UsersController],
-        providers: [app_service_1.AppService, users_service_1.UsersService],
+        controllers: [app_controller_1.AppController,
+            users_controller_1.UsersController,
+            dashboard_controller_1.B2BDashboardController,
+            favorites_controller_1.FavoritesController,
+            forms_controller_1.FormsController,
+        ],
+        providers: [
+            app_service_1.AppService,
+            users_service_1.UsersService,
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

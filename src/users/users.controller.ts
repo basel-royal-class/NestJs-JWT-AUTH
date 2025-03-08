@@ -13,7 +13,7 @@ export class UsersController {
     // }
 
     @Get('favorites')  // Route: /users/profile
-    @UseGuards(JwtAuthGuard) // Protect route with the JWT guard
+    @UseGuards(new JwtAuthGuard('b2c')) // Protect route with the JWT guard
     getFavourites(@Request() req) {
         const userId = req.user._id;
         const message = `Hello, ${userId}! You have 16 items in your favorites`;
